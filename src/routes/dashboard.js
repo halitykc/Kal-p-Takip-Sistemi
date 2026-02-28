@@ -33,8 +33,12 @@ router.get('/stats', requireAuth, (req, res) => {
         `).all();
 
         // Product completeness: Kalıp Üst + Kalıp Alt + Zımba + Plaka = Tam Takım
+        // Hurda ve Çıkış durumundaki kalıplar sayılmaz
         const allMolds = db.prepare(`
-            SELECT product_code, mold_type, position, COUNT(*) as cnt FROM molds GROUP BY product_code, mold_type, position
+            SELECT product_code, mold_type, position, COUNT(*) as cnt 
+            FROM molds 
+            WHERE status NOT IN ('Hurda', 'Çıkış')
+            GROUP BY product_code, mold_type, position
         `).all();
 
         const productMap = {};
