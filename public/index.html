@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalıp Takip Sistemi</title>
+    <meta name="description" content="Endüstriyel Kalıp Takip ve Stok Yönetim Sistemi">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-bg-grid"></div>
+        <div class="login-card">
+            <div class="login-logo">
+                <span class="material-icons-round">precision_manufacturing</span>
+            </div>
+            <h1 class="login-title">KALIP TAKİP</h1>
+            <p class="login-subtitle">Endüstriyel Stok Yönetim Sistemi</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Kullanıcı Adı</label>
+                    <div class="input-icon">
+                        <span class="material-icons-round">person</span>
+                        <input type="text" id="login-username" placeholder="Kullanıcı adınız" required
+                            autocomplete="username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Şifre</label>
+                    <div class="input-icon">
+                        <span class="material-icons-round">lock</span>
+                        <input type="password" id="login-password" placeholder="Şifreniz" required
+                            autocomplete="current-password">
+                    </div>
+                </div>
+                <div id="login-error" class="error-msg" style="display:none"></div>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <span class="material-icons-round">login</span> Giriş Yap
+                </button>
+            </form>
+            <div class="dev-signature login-sig">
+                <span class="material-icons-round">code</span>
+                Halit Yakıcı tarafından geliştirilmiştir
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app" style="display:none">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="material-icons-round sidebar-logo">precision_manufacturing</span>
+                <span class="sidebar-title">KALIP TAKİP</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-page="dashboard">
+                    <span class="material-icons-round">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" data-page="molds">
+                    <span class="material-icons-round">view_in_ar</span>
+                    <span>Kalıplar</span>
+                </a>
+                <a href="#" class="nav-link" data-page="stock">
+                    <span class="material-icons-round">swap_vert</span>
+                    <span>Stok Hareketleri</span>
+                </a>
+                <a href="#" class="nav-link" data-page="machines">
+                    <span class="material-icons-round">settings</span>
+                    <span>Makinalar</span>
+                </a>
+                <a href="#" class="nav-link" data-page="pending">
+                    <span class="material-icons-round">pending_actions</span>
+                    <span>Onay Bekleyenler</span>
+                </a>
+                <a href="#" class="nav-link" data-page="maintenance">
+                    <span class="material-icons-round">build</span>
+                    <span>Bakım Takip</span>
+                </a>
+                <a href="#" class="nav-link" data-page="import" data-role="admin">
+                    <span class="material-icons-round">upload_file</span>
+                    <span>Excel Import</span>
+                </a>
+                <a href="#" class="nav-link" data-page="users" data-role="admin">
+                    <span class="material-icons-round">group</span>
+                    <span>Kullanıcılar</span>
+                </a>
+                <a href="#" class="nav-link" data-page="backup" data-role="admin">
+                    <span class="material-icons-round">backup</span>
+                    <span>Yedekleme</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <span class="material-icons-round">account_circle</span>
+                    <div>
+                        <div id="user-name" class="user-name"></div>
+                        <div id="user-role" class="user-role"></div>
+                    </div>
+                </div>
+                <button id="logout-btn" class="btn btn-ghost btn-sm" title="Çıkış">
+                    <span class="material-icons-round">logout</span>
+                </button>
+            </div>
+            <div class="dev-signature sidebar-sig">
+                <span class="material-icons-round">code</span>
+                Halit Yakıcı
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <button class="btn btn-ghost sidebar-toggle" id="sidebar-toggle">
+                    <span class="material-icons-round">menu</span>
+                </button>
+                <h2 id="page-title" class="page-title">Dashboard</h2>
+                <div class="topbar-right">
+                    <div class="notification-bell" id="notification-bell" title="Bildirimler">
+                        <span class="material-icons-round">notifications</span>
+                        <span class="notif-badge" id="notif-badge" style="display:none"></span>
+                    </div>
+                    <div class="topbar-actions" id="topbar-actions"></div>
+                </div>
+            </header>
+            <div class="content" id="page-content"></div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay" style="display:none">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h3 id="modal-title"></h3>
+                <button class="btn btn-ghost modal-close" id="modal-close">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer" id="modal-footer"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/components/modal.js"></script>
+    <script src="/js/components/table.js"></script>
+    <script src="/js/pages/dashboard.js"></script>
+    <script src="/js/pages/molds.js"></script>
+    <script src="/js/pages/stock.js"></script>
+    <script src="/js/pages/machines.js"></script>
+    <script src="/js/pages/import.js"></script>
+    <script src="/js/pages/users.js"></script>
+    <script src="/js/pages/pending.js"></script>
+    <script src="/js/pages/maintenance.js"></script>
+    <script src="/js/pages/backup.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+
+</html>
